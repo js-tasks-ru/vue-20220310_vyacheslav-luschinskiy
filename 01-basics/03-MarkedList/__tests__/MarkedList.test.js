@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs/promises');
 const { getSolutionPath } = require('taskbook-test-utils');
 
-describe('basics/VueCalculator', () => {
+describe('basics/MarkedList', () => {
   it('Задача добавлена, но требует ручной проверки', () => {});
 
   it('Исходный код script.js должен включать создание приложения через "createApp("', async () => {
