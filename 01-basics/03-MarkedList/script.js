@@ -32,8 +32,17 @@ const emails = [
 const myApp = createApp({
   data() {
     return {
-      count: 0,
+      searchString: '',
+      email: emails,
     };
+  },
+  computed: {
+    markedEmails() {
+      return this.email.map((email) => ({
+        email: email,
+        isMarked: this.searchString ? email.toLowerCase().includes(this.searchString.toLowerCase()) : false,
+      }));
+    },
   },
 });
 
