@@ -1,18 +1,21 @@
 <template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <ui-icon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+  <div class="dropdown" :class="{ dropdown_opened: isMenuOpen }">
+    <button type="button" class="dropdown__toggle" :class="{ dropdown__toggle_icon: isIcon }" @click="toggleMenu">
+      <ui-icon v-if="activeButtonTitle.icon" :icon="activeButtonTitle.icon" class="dropdown__icon" />
+      <span>{{ activeButtonTitle.text }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 1
-      </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <ui-icon icon="tv" class="dropdown__icon" />
-        Option 2
+    <div v-show="isMenuOpen" class="dropdown__menu" role="listbox">
+      <button
+        v-for="option in options"
+        class="dropdown__item"
+        :class="{ dropdown__item_icon: isIcon }"
+        role="option"
+        type="button"
+        @click="optionClickHandler(option.value)"
+      >
+        <ui-icon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
     </div>
   </div>
@@ -25,6 +28,37 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+
+  props: {
+    options: Array,
+    modelValue: String,
+    title: String,
+  },
+
+  data() {
+    return {
+      isMenuOpen: false,
+    };
+  },
+  computed: {
+    isIcon() {
+      return this.options.find((i) => i.icon);
+    },
+    activeButtonTitle() {
+      const selectedOption = this.options.find((i) => i.value === this.modelValue);
+      return this.modelValue ? { text: selectedOption.text, icon: selectedOption.icon } : { text: this.title };
+    },
+  },
+
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
+    optionClickHandler(value) {
+      this.$emit('update:modelValue', value);
+      this.toggleMenu();
+    },
+  },
 };
 </script>
 
