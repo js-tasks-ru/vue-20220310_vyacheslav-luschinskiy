@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import cloneDeep from 'lodash-es/cloneDeep.js';
 import { SensorsDataController } from '../services/SensorsDataController';
 import { SensorsDataStreamingService } from '../services/SensorsDataStreamingService';
 import SensorsDataRow from './SensorsDataRow';
@@ -43,7 +42,8 @@ export default {
     },
 
     setData(sensors) {
-      this.sensors = cloneDeep(sensors);
+      const sensorArray = Object.values(sensors);
+      this.sensors = sensorArray.reduce((result, { id, ...rest }) => ({ ...result, [id]: rest }), {});
     },
   },
 };
