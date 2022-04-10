@@ -42,6 +42,7 @@ export default {
     },
 
     setData(sensors) {
+      // делаю преобразование в массив а потом обратно в тот же объест, чтобы создать новый вложенный объект
       const sensorArray = Object.values(sensors);
       this.sensors = sensorArray.reduce((result, { id, ...rest }) => ({ ...result, [id]: rest }), {});
     },
