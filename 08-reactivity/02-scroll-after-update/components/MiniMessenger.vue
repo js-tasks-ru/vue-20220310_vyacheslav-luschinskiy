@@ -1,7 +1,7 @@
 <template>
   <main class="mini-messenger">
     <ul class="messages">
-      <li v-for="message in messages" :key="message.id" class="message">
+      <li v-for="message in messages" :key="message.id" ref="items" class="message">
         {{ message.text }}
       </li>
     </ul>
@@ -34,6 +34,7 @@ export default {
   methods: {
     async handleSendSubmit() {
       await this.send();
+      this.$refs.items.at(-1).scrollIntoView();
     },
 
     async send() {
