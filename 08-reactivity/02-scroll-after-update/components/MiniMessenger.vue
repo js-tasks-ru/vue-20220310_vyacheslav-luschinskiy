@@ -32,12 +32,12 @@ export default {
   },
 
   methods: {
-    async handleSendSubmit() {
-      await this.send();
+    handleSendSubmit() {
+      this.send();
       this.$refs.items.at(-1).scrollIntoView();
     },
 
-    async send() {
+    send() {
       this.messages.push({
         id: lastId++,
         text: this.newMessage,
