@@ -23,7 +23,7 @@ export default {
     return {
       newMessage: '',
       messages: [
-        { id: lastId++, text: 'First message' },
+        { id: lastId++, text: 'First messaged' },
         { id: lastId++, text: 'Second message' },
         { id: lastId++, text: 'Third message' },
         { id: lastId++, text: 'Forth message' },
