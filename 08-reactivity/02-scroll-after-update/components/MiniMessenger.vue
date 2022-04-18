@@ -1,7 +1,7 @@
 <template>
   <main class="mini-messenger">
     <ul class="messages">
-      <li v-for="message in messages" :key="message.id" class="message">
+      <li v-for="message in messages" :key="message.id" ref="items" class="message">
         {{ message.text }}
       </li>
     </ul>
@@ -23,7 +23,7 @@ export default {
     return {
       newMessage: '',
       messages: [
-        { id: lastId++, text: 'First message' },
+        { id: lastId++, text: 'First messaged' },
         { id: lastId++, text: 'Second message' },
         { id: lastId++, text: 'Third message' },
         { id: lastId++, text: 'Forth message' },
@@ -32,11 +32,12 @@ export default {
   },
 
   methods: {
-    async handleSendSubmit() {
-      await this.send();
+    handleSendSubmit() {
+      this.send();
+      this.$nextTick(() => this.$refs.items.at(-1).scrollIntoView());
     },
 
-    async send() {
+    send() {
       this.messages.push({
         id: lastId++,
         text: this.newMessage,
